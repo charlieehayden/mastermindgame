@@ -1,0 +1,192 @@
+import pyfiglet
+from termcolor import colored, cprint
+
+mastermind = pyfiglet.figlet_format("Mastermind", font = "big")
+print_green = lambda x: cprint(x, 'green')
+
+print_green(mastermind)
+
+def menu():
+    print("------------------------------------------------------")
+    print("                     Main Menu                       ")
+    print("------------------------------------------------------")
+    print("     Welcome to Wizard Neeysa's Mastermind Game!   \n")
+    print(" Are you worthy enough to become the next Mastermind?\n")
+    print("   ✧･ﾟ: *✧･ﾟ:*  Let's play and see!  *:･ﾟ✧*:･ﾟ✧  \n")
+    print("------------------------------------------------------")
+    print()
+    print("[1] Game instructions")
+    print("[2] Play the game!")
+    choice = int(input("\nEnter any number above to proceed: "))
+    
+    if choice == 1:
+        print("--------------------------------------------------")
+        print("                   Instructions                   ")
+        print("--------------------------------------------------\n")
+        print("1. Wizard Neeysa will randomly select 4 fruits from the 6 fruits available:\n")
+        print("             [durian, pear, apple, cherry, lemon, orange]  \n")
+        print("2. Wizard Neeysa will create a secret code out of 4 fruits\n")
+        print("3. You are required to guess the correct fruits in the correct sequence\n")
+        print("4. The game will come to an end once you have cracked the secret code!\n")
+        print("--------------------------------------------------")
+        print("                      Rules                       ")
+        print("--------------------------------------------------\n")
+        print("1. You only have 8 tries! Guess carefully, my young wizard!\n")
+        print("2. Answer using the format below!")
+        print("   For example: durian apple pear cherry   \n")
+        print("3. You can enter the same fruit multiple times")
+        print("   For example: durian durian apple pear  \n")
+        confirm()
+    if choice == 2:
+        confirm()
+
+def confirm():
+    confirmation = "Y"
+    while confirmation == "Y":
+        confirmation = input("\nAre you ready to become the next Mastermind?\nEnter Y for Yes or enter N for No: \n\n").upper()
+        #When player enters Y
+        if confirmation == "Y":
+            True
+            print(" »——⍟——««»»——⍟——««»»——⍟——««»»——⍟——«")
+            print("|                                     |")
+            print("|        Let's play MASTERMIND!       |")
+            print("|                                     |")
+            print(" »——⍟——««»»——⍟——««»»——⍟——««»»——⍟——«")
+            start()
+        #When player enter N
+        if confirmation == "N":
+            print("--------------------------------------------------")
+            print(" ‧͙⁺˚*･༓☾ Enter Y whenever you are ready! ☽༓･*˚⁺‧͙ ")
+            print("--------------------------------------------------")
+            confirm()
+        #When player enters input other than Y or N
+        else:
+            print("-------------------------------------------------------------")
+            print("‧͙⁺˚*･༓☾ Naughty wizard! Enter Y for Yes or N for No! ☽༓･*˚⁺‧͙")
+            print("-------------------------------------------------------------")
+            confirm()
+            
+def check(first_check, second_check):
+    first_checkup = "The correct fruits that are in the correct place are: " + str(first_check)
+    second_checkup = "The correct fruits that are in the wrong place are: " + str(second_check)
+    return print(first_checkup + "\n" + second_checkup + "\n")
+    
+#importing random and collections libraries
+from random import choice
+from collections import Counter
+
+#start game
+def start():
+    rounds = 1
+    attempts = 1
+    attempts_left = 8
+    fruit_list = ["durian", "pear", "apple", "cherry", "lemon", "orange"]
+    print("\n\nThese are the fruits available: ", fruit_list)
+    start = True
+    
+    while start:
+        secret_code = []
+        for i in range(4):
+           secret_code.append(choice(fruit_list))
+        print("\nThe secret code is: ", secret_code)
+        
+        Win = False
+        while True:
+            assessment = False
+            correct = 0
+            wrong = 0
+            while not assessment:
+                assessment = True
+                
+                print("\nRound", rounds)
+        
+                players_guess = []
+                players_guess.append(str(input("Please enter your guess: ")).lower())
+                for fruits in players_guess:
+                    players_guess_list = fruits.split()
+                    break
+                for i in players_guess_list:
+                    if i not in fruit_list:
+                        print("Wizard Neeysa can sense that you guessed a fruit that is not in the list! Try again!")
+                        print("P.S Make sure there is no comma in between your fruits!")
+                        assessment = False
+                        break
+                if len(players_guess_list) != len(secret_code):
+                    print("You entered the wrong number of fruits! Try again!")
+                    assessment = False
+                    continue
+               
+            correct = sum(1 for x,y in zip(secret_code, players_guess_list) if x == y) # Used to check correct placements with the random list x (up and down)
+            wrong = sum((Counter(secret_code) & Counter(players_guess_list)).values()) - correct # Calculates the wrong placements
+
+            if correct == 4: 
+                Win = True
+                break
+            
+            elif correct != 4:
+                rounds = rounds + 1
+                attempts = attempts + 1
+                attempts_left = attempts_left - 1
+                check(correct, wrong)
+                print("You've got", attempts_left, "guess(es) left!")
+                
+                if attempts_left == 0:
+                    print("\n     ▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▄▄▄█████▓")
+                    print("       ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓██▒    ▒██▒  ██▒▒██    ▒ ▓  ██▒ ▓▒")
+                    print("        ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒██░    ▒██░  ██▒░ ▓██▄   ▒ ▓██░ ▒░")
+                    print("        ░ ▐██▓░▒██   ██░▓▓█  ░██░   ▒██░    ▒██   ██░  ▒   ██▒░ ▓██▓ ░")
+                    print("         ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░██████▒░ ████▓▒░▒██████▒▒  ▒██▒ ░") 
+                    print("          ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▒░▓  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░  ▒ ░░")  
+                    print("        ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░    ░ ░ ▒  ░  ░ ▒ ▒░ ░ ░▒  ░ ░    ░")    
+                    print("        ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░ ░   ░ ░ ░ ▒  ░  ░  ░    ░")      
+                    print("        ░ ░         ░ ░     ░            ░  ░    ░ ░        ░ ")
+                    print()
+                    print("\n  You ran out of guesses... You are not worthy of being the Mastermind!")
+                    playagain()
+                    
+        if Win:
+            print(" ____  ____   ___   _____  _____   ____      ____   ___   ____  _____")
+            print("|_  _||_  _|.'   `.|_   _||_   _| |_  _|    |_  _|.'   `.|_   \|_   _|") 
+            print("  \ \  / / /  .-.  \ | |    | |     \ \  /\  / / /  .-.  \ |   \ | |")   
+            print("   \ \/ /  | |   | | | '    ' |      \ \/  \/ /  | |   | | | |\ \| |")   
+            print("   _|  |_  \  `-'  /  \ \__/ /        \  /\  /   \  `-'  /_| |_\   |_")  
+            print("  |______|  `.___.'    `.__.'          \/  \/     `.___.'|_____|\____|")
+            print()
+            print("=========(Wizard Neeysa grants you the title of 'MASTERMIND')=========")
+            print()
+            print("                                    ,/   *                            ")
+            print("                                 _,'/_   |                            ")
+            print('                                 `(")' ,'/                            ')
+            print("                              _ _,-H-./ /                             ")
+            print("                              \_\_\.   /                              ")
+            print('                                   )" |  (                            ')
+            print("                             __/   H   \__                            ")
+            print("                             \    /|\    /                            ")
+            print("`                              --'|||`--'                             ")
+            print("                                 ==^==                                ")
+            print("\nIt took you", attempts, "guess(es) to be the Mastermind!\n")
+            playagain()
+
+def playagain():
+    play_again = "YES"
+    while play_again == "YES":
+        players_answer = input("\nWould you like to play again? Yes or No?").upper()
+        if players_answer == "YES":
+            True
+            menu()
+            
+        if players_answer == "NO":
+            print("     _______.     ___   ____    ____  ______   .__   __.      ___      .______          ___ ")     
+            print("    /       |    /   \  \   \  /   / /  __  \  |  \ |  |     /   \     |   _  \        /   \ ")    
+            print("   |   (----`   /  ^  \  \   \/   / |  |  |  | |   \|  |    /  ^  \    |  |_)  |      /  ^  \ ")    
+            print("    \   \      /  /_\  \  \_    _/  |  |  |  | |  . `  |   /  /_\  \   |      /      /  /_\  \ ")   
+            print(".----)   |    /  _____  \   |  |    |  `--'  | |  |\   |  /  _____  \  |  |\  \----./  _____  \ ") 
+            print("|_______/    /__/     \__\  |__|     \______/  |__| \__| /__/     \__\ | _| `._____/__/     \__\ ")
+            print("\n★・・・・・・★・・・・・・★ Redirecting you back to the main menu! ★・・・・・・★・・・・・・★\n")
+            menu()
+            
+        else:
+            print("\nAnswer Yes or No only please! I believe all of my wizards have eyes!\n")
+            playagain()
+
+menu()
