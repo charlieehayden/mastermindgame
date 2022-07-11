@@ -1,11 +1,14 @@
+# importing pyfiglet and termcolor libraries for 'Mastermind' title
 import pyfiglet
 from termcolor import colored, cprint
 
-mastermind = pyfiglet.figlet_format("Mastermind", font = "big")
-print_green = lambda x: cprint(x, 'green')
+# displays the 'Mastermind' title
+mastermind = pyfiglet.figlet_format("Mastermind", font = "big") # changes font of 'Mastermind' title
+print_green = lambda x: cprint(x, 'green') # changes 'Mastermind' title to green 
 
 print_green(mastermind)
 
+# displays the main menu along with two choices
 def menu():
     print("------------------------------------------------------")
     print("                     Main Menu                       ")
@@ -15,10 +18,11 @@ def menu():
     print("   ✧･ﾟ: *✧･ﾟ:*  Let's play and see!  *:･ﾟ✧*:･ﾟ✧  \n")
     print("------------------------------------------------------")
     print()
-    print("[1] Game instructions")
+    print("[1] Game instructions") 
     print("[2] Play the game!")
     choice = int(input("\nEnter any number above to proceed: "))
     
+    # if player chooses 1
     if choice == 1:
         print("--------------------------------------------------")
         print("                   Instructions                   ")
@@ -37,14 +41,23 @@ def menu():
         print("3. You can enter the same fruit multiple times")
         print("   For example: durian durian apple pear  \n")
         confirm()
+        
+    # if player chooses 2
     if choice == 2:
         confirm()
-
+    
+    # if player enters input other than 1 or 2
+    else:
+        print("\nEnter 1 or 2 only! Choose again, young one!\n")
+        menu()
+        
+# asks player if ready or not ready
 def confirm():
     confirmation = "Y"
     while confirmation == "Y":
         confirmation = input("\nAre you ready to become the next Mastermind?\nEnter Y for Yes or enter N for No: \n\n").upper()
-        #When player enters Y
+        
+        # when player enters Y
         if confirmation == "Y":
             True
             print(" »——⍟——««»»——⍟——««»»——⍟——««»»——⍟——«")
@@ -53,76 +66,88 @@ def confirm():
             print("|                                     |")
             print(" »——⍟——««»»——⍟——««»»——⍟——««»»——⍟——«")
             start()
-        #When player enter N
+            
+        # when player enters N
         if confirmation == "N":
             print("--------------------------------------------------")
             print(" ‧͙⁺˚*･༓☾ Enter Y whenever you are ready! ☽༓･*˚⁺‧͙ ")
             print("--------------------------------------------------")
             confirm()
-        #When player enters input other than Y or N
+            
+        # when player enters input other than Y or N
         else:
             print("-------------------------------------------------------------")
             print("‧͙⁺˚*･༓☾ Naughty wizard! Enter Y for Yes or N for No! ☽༓･*˚⁺‧͙")
             print("-------------------------------------------------------------")
             confirm()
-            
+
+# checks the player's guess and tells player which fruit is in the correct and wrong place 
 def check(first_check, second_check):
     first_checkup = "The correct fruits that are in the correct place are: " + str(first_check)
     second_checkup = "The correct fruits that are in the wrong place are: " + str(second_check)
     return print(first_checkup + "\n" + second_checkup + "\n")
     
-#importing random and collections libraries
+# imports random and collections libraries
 from random import choice
 from collections import Counter
 
-#start game
+# start game
 def start():
     rounds = 1
     attempts = 1
     attempts_left = 8
-    fruit_list = ["durian", "pear", "apple", "cherry", "lemon", "orange"]
+    fruit_list = ["durian", "pear", "apple", "cherry", "lemon", "orange"] # list of available fruits the computer can choose from
     print("\n\nThese are the fruits available: ", fruit_list)
     start = True
     
     while start:
         secret_code = []
         for i in range(4):
-           secret_code.append(choice(fruit_list))
+           secret_code.append(choice(fruit_list)) # randomly selects 4 fruits to create secret code
         print("\nThe secret code is: ", secret_code)
         
-        Win = False
-        while True:
+        Win = False 
+        while True: 
             assessment = False
             correct = 0
             wrong = 0
             while not assessment:
                 assessment = True
                 
+                # displays which round the player is on
                 print("\nRound", rounds)
         
                 players_guess = []
-                players_guess.append(str(input("Please enter your guess: ")).lower())
+                players_guess.append(str(input("Please enter your guess: ")).lower()) # prompts player to input their guess
+                
+                # data validation
                 for fruits in players_guess:
-                    players_guess_list = fruits.split()
+                    players_guess_list = fruits.split() # converts player's guess (string) into single element in a list 
                     break
+                
+                # error handling
+                # if player inputs fruit(s) that is not in the list
                 for i in players_guess_list:
                     if i not in fruit_list:
                         print("Wizard Neeysa can sense that you guessed a fruit that is not in the list! Try again!")
                         print("P.S Make sure there is no comma in between your fruits!")
                         assessment = False
                         break
+                    
+                # if player inputs more or less than 4 fruits
                 if len(players_guess_list) != len(secret_code):
                     print("You entered the wrong number of fruits! Try again!")
                     assessment = False
                     continue
-               
-            correct = sum(1 for x,y in zip(secret_code, players_guess_list) if x == y) # Used to check correct placements with the random list x (up and down)
-            wrong = sum((Counter(secret_code) & Counter(players_guess_list)).values()) - correct # Calculates the wrong placements
+              
+            correct = sum(1 for x,y in zip(secret_code, players_guess_list) if x == y) # used to check correct placements with the secret code x (up and down)
+            wrong = sum((Counter(secret_code) & Counter(players_guess_list)).values()) - correct # calculates the wrong placements
 
             if correct == 4: 
                 Win = True
                 break
             
+            # displays how many guesses the player has left
             elif correct != 4:
                 rounds = rounds + 1
                 attempts = attempts + 1
@@ -130,6 +155,7 @@ def start():
                 check(correct, wrong)
                 print("You've got", attempts_left, "guess(es) left!")
                 
+                # displays lose message when player is out of guesses
                 if attempts_left == 0:
                     print("\n     ▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▄▄▄█████▓")
                     print("       ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓██▒    ▒██▒  ██▒▒██    ▒ ▓  ██▒ ▓▒")
@@ -144,6 +170,7 @@ def start():
                     print("\n  You ran out of guesses... You are not worthy of being the Mastermind!")
                     playagain()
                     
+        # displays win message when player guesses the secret code            
         if Win:
             print(" ____  ____   ___   _____  _____   ____      ____   ___   ____  _____")
             print("|_  _||_  _|.'   `.|_   _||_   _| |_  _|    |_  _|.'   `.|_   \|_   _|") 
@@ -166,15 +193,19 @@ def start():
             print("                                 ==^==                                ")
             print("\nIt took you", attempts, "guess(es) to be the Mastermind!\n")
             playagain()
-
+            
+# asks player to play again or no
 def playagain():
     play_again = "YES"
     while play_again == "YES":
         players_answer = input("\nWould you like to play again? Yes or No?").upper()
+        
+        # if player enters YES
         if players_answer == "YES":
             True
             menu()
             
+        # if player enters NO   
         if players_answer == "NO":
             print("     _______.     ___   ____    ____  ______   .__   __.      ___      .______          ___ ")     
             print("    /       |    /   \  \   \  /   / /  __  \  |  \ |  |     /   \     |   _  \        /   \ ")    
@@ -185,8 +216,8 @@ def playagain():
             print("\n★・・・・・・★・・・・・・★ Redirecting you back to the main menu! ★・・・・・・★・・・・・・★\n")
             menu()
             
+        # if player enters input other than YES or NO   
         else:
             print("\nAnswer Yes or No only please! I believe all of my wizards have eyes!\n")
             playagain()
-
 menu()
