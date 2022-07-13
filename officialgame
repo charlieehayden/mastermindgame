@@ -1,84 +1,80 @@
-# importing pyfiglet and termcolor libraries for 'Mastermind' title
-import pyfiglet
-from termcolor import colored, cprint
-
-# displays the 'Mastermind' title
-mastermind = pyfiglet.figlet_format("Mastermind", font = "big") # changes font of 'Mastermind' title
-print_green = lambda x: cprint(x, 'green') # changes 'Mastermind' title to green 
-
-print_green(mastermind)
+# displays 'MASTERMIND' title at the beginning of the game
+print("  ███╗   ███╗ █████╗ ███████╗████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗██████╗") 
+print("  ████╗ ████║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗")
+print("  ██╔████╔██║███████║███████╗   ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║██║  ██║")
+print("  ██║╚██╔╝██║██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██║  ██║")
+print("  ██║ ╚═╝ ██║██║  ██║███████║   ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██████╔╝")
+print("  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═════╝ ")
 
 # displays the main menu along with two choices
 def menu():
-    print("------------------------------------------------------")
-    print("                     Main Menu                       ")
-    print("------------------------------------------------------")
-    print("     Welcome to Wizard Neeysa's Mastermind Game!   \n")
-    print(" Are you worthy enough to become the next Mastermind?\n")
-    print("   ✧･ﾟ: *✧･ﾟ:*  Let's play and see!  *:･ﾟ✧*:･ﾟ✧  \n")
-    print("------------------------------------------------------")
+    print("\t\t-----------------------------------------------------")
+    print("\t\t                     Main Menu                       ")
+    print("\t\t-----------------------------------------------------")
+    print("\t\t    Welcome to Wizard Neeysa's Mastermind Game!   \n")
+    print("\t\tAre you worthy enough to become the next Mastermind?\n")
+    print("\t\t                Let's play and see!                 ")
+    print("\t\t-----------------------------------------------------")
     print()
-    print("[1] Game instructions") 
-    print("[2] Play the game!")
-    choice = int(input("\nEnter any number above to proceed: "))
+    print("\t\t\t       [1] Game instructions") 
+    print("\t\t\t       [2] Play the game!")
+    choice = (input("\n\t\t\tEnter any number above to proceed: "))
     
     # if player chooses 1
-    if choice == 1:
-        print("--------------------------------------------------")
-        print("                   Instructions                   ")
-        print("--------------------------------------------------\n")
-        print("1. Wizard Neeysa will randomly select 4 fruits from the 6 fruits available:\n")
-        print("    [durian, pear, apple, cherry, lemon, orange]  \n")
-        print("2. Wizard Neeysa will create a secret code out of 4 fruits\n")
-        print("3. You are required to guess the correct fruits in the correct sequence\n")
-        print("4. The game will come to an end once you have cracked the secret code!\n")
-        print("--------------------------------------------------")
-        print("                      Rules                       ")
-        print("--------------------------------------------------\n")
-        print("1. You only have 8 tries! Guess carefully, my young wizard!\n")
-        print("2. Answer using the format below!")
-        print("   Please enter your guess: durian apple pear cherry \n")
-        print("3. You can enter the same fruit multiple times")
-        print("   For example: durian durian apple pear  \n")
+    if choice == "1":
+        print("\t\t-----------------------------------------------------")
+        print("\t\t                    Instructions                     ")
+        print("\t\t-----------------------------------------------------\n")
+        print("\t1. Wizard Neeysa will randomly select 4 fruits from the 6 fruits available:\n")
+        print("\t\t      [durian, pear, apple, cherry, lemon, orange]  \n")
+        print("\t2. Wizard Neeysa will create a secret code out of the 4 fruits\n")
+        print("\t3. You are required to guess the correct fruits in the correct sequence\n")
+        print("\t4. The game will come to an end once you have cracked the secret code!\n")
+        print("\t\t-----------------------------------------------------")
+        print("\t\t                       Rules                         ")
+        print("\t\t-----------------------------------------------------\n")
+        print("\t     1. You only have 8 tries! Guess carefully, my young wizard!\n")
+        print("\t     2. Answer using the format below!\n")
+        print("\t\t  Please enter your guess: durian apple pear cherry \n")
+        print("\t     3. You can enter the same fruit multiple times\n")
+        print("\t\t  For example: durian durian apple pear  \n")
         confirm()
         
     # if player chooses 2
-    if choice == 2:
+    if choice == "2":
         confirm()
     
     # if player enters input other than 1 or 2
     else:
-        print("\nEnter 1 or 2 only! Choose again, young one!\n")
+        print("\n\t\t    Enter 1 or 2 only! Choose again, young one!\n")
         menu()
         
 # asks player if ready or not ready
 def confirm():
     confirmation = "Y"
     while confirmation == "Y":
-        confirmation = input("\nAre you ready to become the next Mastermind?\nEnter Y for Yes or enter N for No: \n\n").upper()
+        confirmation = input("\n\t\t   Are you ready to become the next Mastermind?\n\t\t\tEnter Y for Yes or enter N for No: ").upper()
         
         # when player enters Y
         if confirmation == "Y":
             True
-            print(" »——⍟——««»»——⍟——««»»——⍟——««»»——⍟——«")
-            print("|                                     |")
-            print("|        Let's play MASTERMIND!       |")
-            print("|                                     |")
-            print(" »——⍟——««»»——⍟——««»»——⍟——««»»——⍟——«")
+            print("\t\t=====================================================")
+            print("\t\t               Let's play MASTERMIND!                ")
+            print("\t\t=====================================================")
             start()
             
         # when player enters N
         if confirmation == "N":
-            print("--------------------------------------------------")
-            print(" ‧͙⁺˚*･༓☾ Enter Y whenever you are ready! ☽༓･*˚⁺‧͙ ")
-            print("--------------------------------------------------")
+            print("\t        -----------------------------------------------------")
+            print("\t              *･༓ Enter Y whenever you are ready! ༓･*        ")
+            print("\t        -----------------------------------------------------")
             confirm()
             
         # when player enters input other than Y or N
         else:
-            print("-------------------------------------------------------------")
-            print("‧͙⁺˚*･༓☾ Naughty wizard! Enter Y for Yes or N for No! ☽༓･*˚⁺‧͙")
-            print("-------------------------------------------------------------")
+            print("\t        -----------------------------------------------------")
+            print("\t         *･༓ Naughty wizard! Enter Y for Yes or N for No! ༓･*")
+            print("\t        -----------------------------------------------------")
             confirm()
 
 # checks the player's guess and tells player which fruit is in the correct and wrong place 
@@ -105,7 +101,7 @@ def start():
         for i in range(4):
            secret_code.append(choice(fruit_list)) # randomly selects 4 fruits to create secret code
         # remove hash below to display secret code (for developers)
-        #print("\nThe secret code is: ", secret_code)
+        print("\nThe secret code is: ", secret_code)
         
         Win = False 
         while True: 
@@ -221,6 +217,8 @@ def playagain():
             
         # if player enters input other than Y or N   
         else:
-            print("\nAnswer Y or N only please! I believe all of my wizards have eyes!\n")
+            print("\nAnswer Y or N only please! I believe all of my wizards have eyes!")
             playagain()
 menu()
+
+        
