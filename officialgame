@@ -28,7 +28,7 @@ def menu():
         print("                   Instructions                   ")
         print("--------------------------------------------------\n")
         print("1. Wizard Neeysa will randomly select 4 fruits from the 6 fruits available:\n")
-        print("             [durian, pear, apple, cherry, lemon, orange]  \n")
+        print("    [durian, pear, apple, cherry, lemon, orange]  \n")
         print("2. Wizard Neeysa will create a secret code out of 4 fruits\n")
         print("3. You are required to guess the correct fruits in the correct sequence\n")
         print("4. The game will come to an end once you have cracked the secret code!\n")
@@ -37,7 +37,7 @@ def menu():
         print("--------------------------------------------------\n")
         print("1. You only have 8 tries! Guess carefully, my young wizard!\n")
         print("2. Answer using the format below!")
-        print("   For example: durian apple pear cherry   \n")
+        print("   Please enter your guess: durian apple pear cherry \n")
         print("3. You can enter the same fruit multiple times")
         print("   For example: durian durian apple pear  \n")
         confirm()
@@ -104,7 +104,8 @@ def start():
         secret_code = []
         for i in range(4):
            secret_code.append(choice(fruit_list)) # randomly selects 4 fruits to create secret code
-        print("\nThe secret code is: ", secret_code)
+        # remove hash below to display secret code (for developers)
+        #print("\nThe secret code is: ", secret_code)
         
         Win = False 
         while True: 
@@ -157,6 +158,7 @@ def start():
                 
                 # displays lose message when player is out of guesses
                 if attempts_left == 0:
+                    print("\n       The secret code was ", secret_code)
                     print("\n     ▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▄▄▄█████▓")
                     print("       ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓██▒    ▒██▒  ██▒▒██    ▒ ▓  ██▒ ▓▒")
                     print("        ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒██░    ▒██░  ██▒░ ▓██▄   ▒ ▓██░ ▒░")
@@ -167,7 +169,7 @@ def start():
                     print("        ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░ ░   ░ ░ ░ ▒  ░  ░  ░    ░")      
                     print("        ░ ░         ░ ░     ░            ░  ░    ░ ░        ░ ")
                     print()
-                    print("\n  You ran out of guesses... You are not worthy of being the Mastermind!")
+                    print("\n  You ran out of guesses... You are not worthy of becoming the Mastermind!")
                     playagain()
                     
         # displays win message when player guesses the secret code            
@@ -191,22 +193,23 @@ def start():
             print("                             \    /|\    /                            ")
             print("`                              --'|||`--'                             ")
             print("                                 ==^==                                ")
-            print("\nIt took you", attempts, "guess(es) to be the Mastermind!\n")
+            print("\n      The secret code was ", secret_code                             )
+            print("            It took you", attempts, "guess(es) to be the Mastermind!\n")
             playagain()
             
 # asks player to play again or no
 def playagain():
-    play_again = "YES"
-    while play_again == "YES":
-        players_answer = input("\nWould you like to play again? Yes or No?").upper()
+    play_again = "Y"
+    while play_again == "Y":
+        players_answer = input("\nWould you like to play again? (Y/N)?").upper()
         
-        # if player enters YES
-        if players_answer == "YES":
+        # if player enters Y
+        if players_answer == "Y":
             True
             menu()
             
-        # if player enters NO   
-        if players_answer == "NO":
+        # if player enters N   
+        if players_answer == "N":
             print("     _______.     ___   ____    ____  ______   .__   __.      ___      .______          ___ ")     
             print("    /       |    /   \  \   \  /   / /  __  \  |  \ |  |     /   \     |   _  \        /   \ ")    
             print("   |   (----`   /  ^  \  \   \/   / |  |  |  | |   \|  |    /  ^  \    |  |_)  |      /  ^  \ ")    
@@ -216,8 +219,8 @@ def playagain():
             print("\n★・・・・・・★・・・・・・★ Redirecting you back to the main menu! ★・・・・・・★・・・・・・★\n")
             menu()
             
-        # if player enters input other than YES or NO   
+        # if player enters input other than Y or N   
         else:
-            print("\nAnswer Yes or No only please! I believe all of my wizards have eyes!\n")
+            print("\nAnswer Y or N only please! I believe all of my wizards have eyes!\n")
             playagain()
 menu()
